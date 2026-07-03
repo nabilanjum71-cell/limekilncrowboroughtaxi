@@ -65,45 +65,6 @@
       <div class="btns">
         <a href="tel:07808065494" class="btn btn-primary">📞 Call 07808 065494</a>
         <a href="https://wa.me/447808065494" target="_blank" class="btn btn-wa">💬 WhatsApp Quote</a>
-        <a href="book.html" class="btn btn-outline" style="border-color:rgba(255,255,255,.4)">📋 Book Online</a>
-      </div>
-    </div>
-
-    <!-- INSTANT QUOTE WIDGET -->
-    <div class="quote-box">
-      <h3>Get an Instant Price</h3>
-      <p>Select your airport and vehicle for a fixed fare</p>
-      <div class="form-row">
-        <div class="f-group">
-          <label class="f-label">Pickup Area</label>
-          <input class="f-input" type="text" value="Crowborough (or nearby village)" readonly style="background:#f7f8fc">
-        </div>
-        <div class="f-group">
-          <label class="f-label">Airport</label>
-          <select class="f-select" id="qs-dest"><option value=''>Select airport...</option><option value="gatwick">Gatwick Airport (LGW)</option><option value="heathrow">Heathrow Airport (LHR)</option><option value="stansted">Stansted Airport (STN)</option><option value="luton">Luton Airport (LTN)</option><option value="london-city">London City Airport (LCY)</option></select>
-        </div>
-        <div class="f-group">
-          <label class="f-label">Vehicle Type</label>
-          <select class="f-select" id="qs-veh"><option value="Saloon">Saloon — max 4 passengers</option><option value="Estate">Estate — max 4 passengers</option><option value="MPV 6">MPV 6 — max 6 passengers</option><option value="MPV 8">MPV 8 — max 8 passengers</option></select>
-        </div>
-        <div class="f-row2">
-          <div class="f-group">
-            <label class="f-label">Travel Date</label>
-            <input class="f-input" type="date" id="qs-date">
-          </div>
-          <div class="f-group">
-            <label class="f-label">Pickup Time</label>
-            <input class="f-input" type="time" id="qs-time">
-          </div>
-        </div>
-        <div class="fare-result" id="fareResult">
-          <div class="fare-from">Your fixed fare</div>
-          <div class="fare-price" id="fr-price">£–</div>
-          <div style="font-size:.72rem;color:var(--muted);margin-top:.2rem" id="fr-desc"></div>
-        </div>
-        <a href="book.html" class="btn btn-primary" style="width:100%;justify-content:center;text-decoration:none">📋 Book Now — Full Booking Form</a>
-        <button class="btn btn-outline" id="getQuoteBtn" style="width:100%">💬 Quick WhatsApp Quote</button>
-        <a href="tel:07808065494" class="btn btn-outline" style="width:100%;text-align:center">📞 Or call 07808 065494</a>
       </div>
     </div>
   </div>
@@ -261,7 +222,7 @@
     <div class="s-eyebrow">Simple Process</div>
     <h2 class="s-title">How to <em>Book</em></h2>
     <div class="process-grid">
-      <div class="process-step"><div class="ps-num">1</div><div class="ps-title">Get a Quote</div><div class="ps-desc">Call us, WhatsApp us or use the instant quote widget above. Tell us your pickup point, airport, vehicle and date. We confirm your fixed price immediately.</div></div>
+      <div class="process-step"><div class="ps-num">1</div><div class="ps-title">Get a Quote</div><div class="ps-desc">Call us or WhatsApp us with your pickup point, airport, vehicle and date. We confirm your fixed price straight away.</div></div>
       <div class="process-step"><div class="ps-num">2</div><div class="ps-title">Booking Confirmed</div><div class="ps-desc">You receive a confirmation with your driver details, vehicle and fixed fare. No payment required upfront — pay on the day.</div></div>
       <div class="process-step"><div class="ps-num">3</div><div class="ps-title">We Track Your Flight</div><div class="ps-desc">For all airport runs we monitor your flight in real time. Delayed? We adjust your pickup automatically — no extra charge, no phone call needed from you.</div></div>
       <div class="process-step"><div class="ps-num">4</div><div class="ps-title">Arrive in Comfort</div><div class="ps-desc">Your driver arrives early, helps load luggage, and gets you to the terminal with time to spare. On arrivals, we meet you inside with a name board on request.</div></div>
@@ -311,7 +272,7 @@
 <!-- CTA BAND -->
 <section class="cta-band">
   <h2>Ready to Book Your Airport Taxi?</h2>
-  <p>Call or WhatsApp for an instant fixed price — confirmed before you travel.</p>
+  <p>Call or WhatsApp for a fixed price — confirmed before you travel.</p>
   <div class="btns">
     <a href="tel:07808065494" class="btn btn-dark">📞 07808 065494</a>
     <a href="https://wa.me/447808065494" target="_blank" class="btn btn-wa">💬 WhatsApp Us</a>
@@ -389,36 +350,5 @@ function toggleMenu(){
   document.body.style.overflow=m.classList.contains('open')?'hidden':'';
 }
 function toggleFaq(el){el.closest('.faq-item').classList.toggle('open')}
-// Quote calculator
-var AIRPORTS_JS=[{"slug": "gatwick", "name": "Gatwick Airport", "km": 35}, {"slug": "heathrow", "name": "Heathrow Airport", "km": 77}, {"slug": "stansted", "name": "Stansted Airport", "km": 105}, {"slug": "luton", "name": "Luton Airport", "km": 93}, {"slug": "london-city", "name": "London City Airport", "km": 68}];
-var VEHICLES_JS=[{"name": "Saloon", "pax": 4, "bags": 4, "mult": 1.0}, {"name": "Estate", "pax": 4, "bags": 6, "mult": 1.15}, {"name": "MPV 6", "pax": 6, "bags": 6, "mult": 1.3}, {"name": "MPV 8", "pax": 8, "bags": 8, "mult": 1.55}];
-function calcFare(){
-  var sel=document.getElementById('qs-dest');
-  var veh=document.getElementById('qs-veh');
-  var res=document.getElementById('fareResult');
-  if(!sel||!veh)return;
-  var ap=AIRPORTS_JS.find(function(a){return a.slug===sel.value});
-  var ve=VEHICLES_JS.find(function(v){return v.name===veh.value});
-  if(!ap||!ve){res.classList.remove('show');return;}
-  var base=Math.round(ap.km*2*ve.mult);
-  document.getElementById('fr-price').textContent='£'+base;
-  document.getElementById('fr-desc').textContent=ve.name+' · '+ap.name+' · Fixed price';
-  res.classList.add('show');
-}
-var qs=document.getElementById('qs-dest');
-var qv=document.getElementById('qs-veh');
-if(qs)qs.addEventListener('change',calcFare);
-if(qv)qv.addEventListener('change',calcFare);
-var btn=document.getElementById('getQuoteBtn');
-if(btn)btn.addEventListener('click',function(){
-  var ap=document.getElementById('qs-dest');
-  var veh=document.getElementById('qs-veh');
-  var dt=document.getElementById('qs-date');
-  if(!ap||!ap.value){alert('Please select your airport');return;}
-  var msg='Hi, I would like a quote for a taxi from Crowborough to '+ap.options[ap.selectedIndex].text;
-  if(veh&&veh.value)msg+=' ('+veh.value+')';
-  if(dt&&dt.value)msg+=' on '+dt.value;
-  window.open('https://wa.me/447808065494?text='+encodeURIComponent(msg),'_blank');
-});
 </script>
 </body></html>
